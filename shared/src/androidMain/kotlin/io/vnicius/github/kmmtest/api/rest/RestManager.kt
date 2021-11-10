@@ -1,13 +1,15 @@
-package io.vnicius.github.kmmtest
+package io.vnicius.github.kmmtest.api.rest
 
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import java.util.concurrent.TimeUnit
 
-actual class Platform actual constructor() {
-    actual val platform: String = "Android ${android.os.Build.VERSION.SDK_INT}"
-}
 
+/**
+ * Created by Vinícius Veríssimo on 09/11/21.
+ * github: @vnicius
+ * vinicius.matheus252@gmail.com
+ */
 actual fun httpClient(config: HttpClientConfig<*>.() -> Unit): HttpClient = HttpClient(OkHttp) {
     config(this)
 

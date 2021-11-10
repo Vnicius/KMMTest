@@ -1,13 +1,14 @@
-package io.vnicius.github.kmmtest
+package io.vnicius.github.kmmtest.api.rest
 
 import io.ktor.client.*
 import io.ktor.client.engine.ios.*
-import platform.UIKit.UIDevice
 
-actual class Platform actual constructor() {
-    actual val platform: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
-}
 
+/**
+ * Created by Vinícius Veríssimo on 09/11/21.
+ * github: @vnicius
+ * vinicius.matheus252@gmail.com
+ */
 actual fun httpClient(config: HttpClientConfig<*>.() -> Unit): HttpClient = HttpClient(Ios) {
     config(this)
 

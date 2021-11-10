@@ -1,5 +1,6 @@
 package io.vnicius.github.kmmtest
 
+import io.vnicius.github.kmmtest.api.rest.Greeting
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
