@@ -10,6 +10,6 @@ import io.vnicius.github.kmmtest.data.model.Pokemon
  */
 class PokemonRepositoryImpl(private val pokemonRemoteDataSource: PokemonRemoteDataSource): PokemonRepository {
 
-    override suspend fun getPokemons(): List<Pokemon>? =
-        pokemonRemoteDataSource.getPokemons()
+    override suspend fun getPokemons(limit: Int, offset: Int): List<Pokemon>? =
+        pokemonRemoteDataSource.getPokemons(limit, offset)
 }

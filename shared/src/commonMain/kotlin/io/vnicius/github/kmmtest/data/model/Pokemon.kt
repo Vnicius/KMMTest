@@ -9,4 +9,4 @@ import kotlinx.serialization.Serializable
  * vinicius.matheus252@gmail.com
  */
 @Serializable
-data class Pokemon(val name: String, val spriteUrl: String? = null)
+data class Pokemon(val id: Long, val name: String, val spriteUrl: String? = null)

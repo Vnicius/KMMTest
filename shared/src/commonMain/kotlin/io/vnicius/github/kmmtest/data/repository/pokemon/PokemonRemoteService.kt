@@ -9,5 +9,5 @@ import io.vnicius.github.kmmtest.data.model.Pokemon
  * vinicius.matheus252@gmail.com
  */
 interface PokemonRemoteService {
-    suspend fun getPokemons(): List<Pokemon>?
+    suspend fun getPokemons(limit: Int, offset: Int): List<Pokemon>?
 }

@@ -30,6 +30,11 @@ dependencies {
     implementation("com.google.accompanist:accompanist-appcompat-theme:0.16.0")
 
     implementation("io.coil-kt:coil-compose:1.4.0")
+
+    val pagingVersion = "3.0.1"
+
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
+    implementation("androidx.paging:paging-compose:1.0.0-alpha14")
 }
 
 android {

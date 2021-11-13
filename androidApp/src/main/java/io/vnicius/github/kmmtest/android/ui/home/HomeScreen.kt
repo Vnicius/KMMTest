@@ -3,20 +3,21 @@ package io.vnicius.github.kmmtest.android.ui.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Card
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
+import io.vnicius.github.kmmtest.android.ui.theme.Shapes
 import io.vnicius.github.kmmtest.data.model.Pokemon
+import kotlinx.coroutines.flow.Flow
 
 
 /**
@@ -26,34 +27,27 @@ import io.vnicius.github.kmmtest.data.model.Pokemon
  */
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), modifier: Modifier = Modifier) {
-    val viewState by homeViewModel.state.collectAsState()
-
     Surface(Modifier.fillMaxSize()) {
         HomeContent(
-            pokemons = viewState.pokemons,
-            isLoading = viewState.isLoading
+            pokemons = homeViewModel.createPokemonsPaging()
         )
     }
 }
 
 @Composable
-fun HomeContent(pokemons: List<Pokemon>, isLoading: Boolean, modifier: Modifier = Modifier) {
+fun HomeContent(pokemons: Flow<PagingData<Pokemon>>, modifier: Modifier = Modifier) {
     PokemonsList(pokemons)
-
-    if (isLoading) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
-    }
 }
 
 @Composable
-fun PokemonsList(pokemons: List<Pokemon>, modifier: Modifier = Modifier) {
+fun PokemonsList(pokemons: Flow<PagingData<Pokemon>>, modifier: Modifier = Modifier) {
+    val pokemonsItems = pokemons.collectAsLazyPagingItems()
+
     LazyColumn {
-        items(items = pokemons) { pokemon ->
-            PokemonItem(pokemon)
+        items(pokemonsItems.itemCount) { index ->
+            pokemonsItems[index]?.let {
+                PokemonItem(it)
+            }
         }
     }
 }
@@ -85,32 +79,10 @@ fun PokemonItem(pokemon: Pokemon, modifier: Modifier = Modifier) {
 fun PreviewPokemonItem() {
     PokemonItem(
         Pokemon(
+            1,
             "Pokemon 1",
             "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png"
         )
     )
 }
-
-@Preview
-@Composable
-fun PreviewHomeContent() {
-    HomeContent(
-        listOf(
-            Pokemon(
-                "Pokemon 1",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png"
-            ),
-            Pokemon(
-                "Pokemon 2",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png"
-            ),
-            Pokemon(
-                "Pokemon 3",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png"
-            )
-        ),
-        false
-    )
-}
-
 
